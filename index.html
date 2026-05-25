@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Financial Platform Hub — Aladdin · Axiom SL · Murex · Calypso · Triple'A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1F3A;
+  --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
+  --g400:#9ca3af;--g500:#6b7280;--g700:#374151;--g900:#111827;
+  --c-aladdin:#e63946;
+  --c-axiom:#00a8e8;
+  --c-murex:#f7931e;
+  --c-calypso:#00d4aa;
+  --c-triplea:#a855f7;
+  --c-overview:#f0c040;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
+
+/* ── TOP NAV ─────────────────────────────────── */
+.top-nav{
+  position:sticky;top:0;z-index:900;
+  background:rgba(13,17,23,.95);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:1440px;margin:0 auto;
+  height:58px;display:flex;align-items:center;gap:6px;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:800;font-size:.95rem;
+  color:#fff;margin-right:16px;white-space:nowrap;flex-shrink:0;
+  letter-spacing:-.3px;
+}
+.nav-logo span{color:rgba(255,255,255,.35);font-weight:400}
+.nav-tabs{display:flex;gap:3px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:7px;
+  font-size:.76rem;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  border:1px solid transparent;
+  transition:all .15s;
+  background:transparent;color:rgba(255,255,255,.38);
+  flex-shrink:0;
+}
+.nav-tab:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.7)}
+.nav-tab.active{color:#fff}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+/* active tab accent per platform */
+.nav-tab[data-p="overview"].active{background:rgba(240,192,64,.1);border-color:rgba(240,192,64,.28)}
+.nav-tab[data-p="aladdin"].active{background:rgba(230,57,70,.1);border-color:rgba(230,57,70,.28)}
+.nav-tab[data-p="axiom"].active{background:rgba(0,168,232,.1);border-color:rgba(0,168,232,.28)}
+.nav-tab[data-p="murex"].active{background:rgba(247,147,30,.1);border-color:rgba(247,147,30,.28)}
+.nav-tab[data-p="calypso"].active{background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.28)}
+.nav-tab[data-p="triplea"].active{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.28)}
+
+/* ── PAGES ──────────────────────────────────── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── HERO ───────────────────────────────────── */
+.hero{
+  position:relative;overflow:hidden;
+  padding:60px 24px 52px;text-align:center;
+}
+.hero-overlay{position:absolute;inset:0;z-index:1}
+.hero-content{position:relative;z-index:2;max-width:860px;margin:0 auto}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:20px;
+  font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:20px;border:1px solid;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:800;line-height:1.12;
+  color:#fff;margin-bottom:14px;
+}
+.hero-sub{
+  font-size:clamp(.88rem,1.5vw,1.05rem);
+  line-height:1.72;color:rgba(255,255,255,.55);
+  max-width:640px;margin:0 auto 34px;
+}
+.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.stat{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:40px;padding:10px 22px;
+  backdrop-filter:blur(8px);
+}
+.stat .sv{font-size:1.45rem;font-weight:900;line-height:1;color:#fff}
+.stat .sl{font-size:.62rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+
+/* hero backgrounds */
+#page-overview .hero{background:linear-gradient(135deg,#0a0f1a 0%,#111d30 50%,#0a1525 100%)}
+#page-overview .hero-overlay{background:radial-gradient(ellipse at 55% 30%,rgba(240,192,64,.12) 0%,transparent 60%)}
+#page-aladdin .hero{background:linear-gradient(135deg,#1a0a0e 0%,#2d0f15 45%,#1a1a2e 100%)}
+#page-aladdin .hero-overlay{background:radial-gradient(ellipse at 60% 30%,rgba(230,57,70,.2) 0%,transparent 60%)}
+#page-axiom .hero{background:linear-gradient(135deg,#000d1a 0%,#002244 50%,#001833 100%)}
+#page-axiom .hero-overlay{background:radial-gradient(ellipse at 50% 20%,rgba(0,168,232,.18) 0%,transparent 60%)}
+#page-murex .hero{background:linear-gradient(135deg,#1a0e00 0%,#2d1a00 45%,#1b2838 100%)}
+#page-murex .hero-overlay{background:radial-gradient(ellipse at 55% 30%,rgba(247,147,30,.2) 0%,transparent 60%)}
+#page-calypso .hero{background:linear-gradient(135deg,#00120f 0%,#003025 45%,#0a2342 100%)}
+#page-calypso .hero-overlay{background:radial-gradient(ellipse at 50% 25%,rgba(0,212,170,.15) 0%,transparent 60%)}
+#page-triplea .hero{background:linear-gradient(135deg,#0f0a1a 0%,#200a35 45%,#1c2b4a 100%)}
+#page-triplea .hero-overlay{background:radial-gradient(ellipse at 55% 30%,rgba(168,85,247,.2) 0%,transparent 60%)}
+
+/* accent text */
+.ac-ov{color:var(--c-overview)}
+.ac-al{color:var(--c-aladdin)}
+.ac-ax{color:var(--c-axiom)}
+.ac-mu{color:var(--c-murex)}
+.ac-ca{color:var(--c-calypso)}
+.ac-tr{color:var(--c-triplea)}
+
+.dot-ov{background:var(--c-overview)}
+.dot-al{background:var(--c-aladdin)}
+.dot-ax{background:var(--c-axiom)}
+.dot-mu{background:var(--c-murex)}
+.dot-ca{background:var(--c-calypso)}
+.dot-tr{background:var(--c-triplea)}
+
+.b-ov{background:rgba(240,192,64,.1);color:var(--c-overview);border-color:rgba(240,192,64,.3)}
+.b-al{background:rgba(230,57,70,.1);color:var(--c-aladdin);border-color:rgba(230,57,70,.3)}
+.b-ax{background:rgba(0,168,232,.1);color:var(--c-axiom);border-color:rgba(0,168,232,.3)}
+.b-mu{background:rgba(247,147,30,.1);color:var(--c-murex);border-color:rgba(247,147,30,.3)}
+.b-ca{background:rgba(0,212,170,.1);color:var(--c-calypso);border-color:rgba(0,212,170,.3)}
+.b-tr{background:rgba(168,85,247,.1);color:var(--c-triplea);border-color:rgba(168,85,247,.3)}
+
+/* ── CONTENT AREA ───────────────────────────── */
+.content{max-width:1400px;margin:0 auto;padding:36px 22px 80px;display:grid;gap:32px}
+
+.sec-label{
+  font-size:.64rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.13em;
+  color:rgba(255,255,255,.22);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.05)}
+
+/* ── CAPABILITY CARDS ───────────────────────── */
+.cap-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  gap:14px;
+}
+.cap-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  padding:20px 20px 18px;
+  transition:transform .18s,box-shadow .18s,background .18s;
+}
+.cap-card:hover{
+  background:rgba(255,255,255,.052);
+  border-color:rgba(255,255,255,.12);
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(0,0,0,.3);
+}
+.cap-icon{font-size:1.65rem;margin-bottom:9px;display:block}
+.cap-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:7px;line-height:1.3}
+.cap-desc{font-size:.76rem;color:rgba(255,255,255,.46);line-height:1.65}
+.cap-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.cap-tag{
+  font-size:.61rem;font-weight:600;
+  padding:2px 8px;border-radius:9px;
+  background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+/* ── HIGHLIGHT STRIP ───────────────────────── */
+.hl-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:12px;
+}
+.hl-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;
+  padding:16px 15px;
+  display:flex;align-items:flex-start;gap:11px;
+}
+.hl-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px}
+.hl-title{font-size:.79rem;font-weight:700;color:#fff;margin-bottom:3px}
+.hl-sub{font-size:.7rem;color:rgba(255,255,255,.38);line-height:1.5}
+
+/* ── INFO CARDS ─────────────────────────────── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.two-col{grid-template-columns:1fr}}
+
+.info-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:22px;
+}
+.info-card h3{
+  font-size:.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:rgba(255,255,255,.3);margin-bottom:15px;
+}
+.info-list{display:flex;flex-direction:column;gap:9px}
+.info-row{display:flex;align-items:flex-start;gap:9px;font-size:.79rem;line-height:1.55}
+.info-row .ic{flex-shrink:0;font-size:.85rem;margin-top:1px}
+.info-row .tx{color:rgba(255,255,255,.62)}
+
+/* ── TABLES ─────────────────────────────────── */
+.tbl-wrap{
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;overflow:hidden;
+}
+.tbl-head{
+  padding:16px 20px 12px;
+  font-size:.86rem;font-weight:700;color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.tbl-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.76rem}
+thead th{
+  background:rgba(255,255,255,.035);
+  padding:9px 15px;
+  text-align:left;
+  font-size:.62rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:rgba(255,255,255,.28);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.035)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.022)}
+td{padding:10px 15px;vertical-align:middle;color:rgba(255,255,255,.65)}
+td:first-child{color:#fff;font-weight:600}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:7px;font-size:.67rem;font-weight:700}
+.b-yes{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.18)}
+.b-no{background:rgba(239,68,68,.08);color:#f87171;border:1px solid rgba(239,68,68,.15)}
+.b-partial{background:rgba(234,179,8,.08);color:#fbbf24;border:1px solid rgba(234,179,8,.15)}
+
+/* ── OVERVIEW: PLATFORM CARDS ───────────────── */
+.platform-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+}
+.pf-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  padding:22px 20px 18px;
+  transition:transform .18s,box-shadow .18s;
+  cursor:pointer;
+}
+.pf-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.32)}
+.pf-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pf-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.pf-name{font-size:.92rem;font-weight:800;color:#fff}
+.pf-type{font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.3);margin-bottom:10px}
+.pf-desc{font-size:.76rem;color:rgba(255,255,255,.48);line-height:1.62}
+.pf-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+
+/* ── USEFULNESS SECTION ─────────────────────── */
+.use-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+}
+.use-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:20px;
+}
+.use-header{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.use-icon{font-size:1.4rem}
+.use-title{font-size:.85rem;font-weight:700;color:#fff}
+.use-body{font-size:.76rem;color:rgba(255,255,255,.48);line-height:1.62}
+
+/* ── FOOTER ─────────────────────────────────── */
+footer{
+  background:#090d14;
+  border-top:1px solid rgba(255,255,255,.05);
+  text-align:center;
+  padding:22px;
+  color:rgba(255,255,255,.22);
+  font-size:.72rem;
+}
+
+@media(max-width:680px){
+  .cap-grid{grid-template-columns:1fr}
+  .hl-grid{grid-template-columns:1fr 1fr}
+  .content{padding:22px 14px 60px}
+  .hero{padding:44px 16px 38px}
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">FinPlatform <span>Hub</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-p="overview" onclick="show('overview',this)">
+        <span class="dot dot-ov"></span>Overview
+      </button>
+      <button class="nav-tab" data-p="aladdin" onclick="show('aladdin',this)">
+        <span class="dot dot-al"></span>BlackRock Aladdin
+      </button>
+      <button class="nav-tab" data-p="axiom" onclick="show('axiom',this)">
+        <span class="dot dot-ax"></span>Axiom SL
+      </button>
+      <button class="nav-tab" data-p="murex" onclick="show('murex',this)">
+        <span class="dot dot-mu"></span>Murex
+      </button>
+      <button class="nav-tab" data-p="calypso" onclick="show('calypso',this)">
+        <span class="dot dot-ca"></span>Calypso
+      </button>
+      <button class="nav-tab" data-p="triplea" onclick="show('triplea',this)">
+        <span class="dot dot-tr"></span>Triple&rsquo;A · Temenos
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW PAGE
+════════════════════════════════════════════ -->
+<section class="page active" id="page-overview">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge b-ov">Platform Overview · 5 Systems Compared</div>
+      <h1>Financial <span class="ac-ov">Platform</span> Landscape</h1>
+      <p class="hero-sub">Five enterprise platforms power the global financial industry — from investment risk analytics and regulatory reporting to capital markets trading and wealth management. This hub walks through what each platform does, who uses it, and where it excels.</p>
+      <div class="stats">
+        <div class="stat"><div class="sv">5</div><div class="sl">Platforms</div></div>
+        <div class="stat"><div class="sv">$21T+</div><div class="sl">Assets on Aladdin</div></div>
+        <div class="stat"><div class="sv">$500T+</div><div class="sl">Notional via Calypso/yr</div></div>
+        <div class="stat"><div class="sv">50+</div><div class="sl">Reg Frameworks (Axiom)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Platform snapshot cards -->
+    <div>
+      <div class="sec-label">The Five Platforms at a Glance</div>
+      <div class="platform-cards">
+        <div class="pf-card" onclick="show('aladdin',document.querySelector('[data-p=aladdin]'))">
+          <div class="pf-card-header"><span class="pf-dot" style="background:var(--c-aladdin)"></span><span class="pf-name">BlackRock Aladdin</span></div>
+          <div class="pf-type">Investment Operating System</div>
+          <div class="pf-desc">The world's largest investment OS. Covers portfolio construction, multi-asset risk analytics, order management and performance attribution for asset managers, insurers and pension funds.</div>
+          <div class="pf-tags"><span class="cap-tag">Risk Analytics</span><span class="cap-tag">OMS/EMS</span><span class="cap-tag">ESG</span><span class="cap-tag">Performance</span></div>
+        </div>
+        <div class="pf-card" onclick="show('axiom',document.querySelector('[data-p=axiom]'))">
+          <div class="pf-card-header"><span class="pf-dot" style="background:var(--c-axiom)"></span><span class="pf-name">Axiom SL</span></div>
+          <div class="pf-type">Regulatory Reporting & Risk</div>
+          <div class="pf-desc">Multi-jurisdictional regulatory reporting engine for global banks. Automates Basel III/IV, FRTB, IFRS 9 ECL, LCR/NSFR, Volcker and 50+ other regulatory frameworks with XBRL submission.</div>
+          <div class="pf-tags"><span class="cap-tag">Basel IV</span><span class="cap-tag">FRTB</span><span class="cap-tag">IFRS 9</span><span class="cap-tag">LCR/NSFR</span></div>
+        </div>
+        <div class="pf-card" onclick="show('murex',document.querySelector('[data-p=murex]'))">
+          <div class="pf-card-header"><span class="pf-dot" style="background:var(--c-murex)"></span><span class="pf-name">Murex MX.3</span></div>
+          <div class="pf-type">Capital Markets · Front-to-Back</div>
+          <div class="pf-desc">Integrated trading, risk and post-trade platform for investment banks and energy firms. Known for deep derivatives pricing (exotics), real-time XVA and end-to-end trade lifecycle management.</div>
+          <div class="pf-tags"><span class="cap-tag">Derivatives</span><span class="cap-tag">XVA</span><span class="cap-tag">Collateral</span><span class="cap-tag">FRTB</span></div>
+        </div>
+        <div class="pf-card" onclick="show('calypso',document.querySelector('[data-p=calypso]'))">
+          <div class="pf-card-header"><span class="pf-dot" style="background:var(--c-calypso)"></span><span class="pf-name">Calypso</span></div>
+          <div class="pf-type">Capital Markets & Treasury</div>
+          <div class="pf-desc">Cross-asset capital markets and treasury platform (now Broadridge). Uniquely strong in CCP technology, collateral optimisation, repo/sec finance and treasury ALM across banks and clearing firms.</div>
+          <div class="pf-tags"><span class="cap-tag">CCP Ops</span><span class="cap-tag">Repo/SFT</span><span class="cap-tag">ALM</span><span class="cap-tag">Collateral</span></div>
+        </div>
+        <div class="pf-card" onclick="show('triplea',document.querySelector('[data-p=triplea]'))">
+          <div class="pf-card-header"><span class="pf-dot" style="background:var(--c-triplea)"></span><span class="pf-name">Triple'A · Temenos</span></div>
+          <div class="pf-type">Wealth & Asset Management</div>
+          <div class="pf-desc">Comprehensive wealth management system for private banks and family offices. Delivers front-to-back portfolio management, GIPS performance, client reporting, ESG and digital advisory on the Temenos stack.</div>
+          <div class="pf-tags"><span class="cap-tag">Wealth Mgmt</span><span class="cap-tag">GIPS</span><span class="cap-tag">ESG</span><span class="cap-tag">OMS</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Where each platform sits -->
+    <div>
+      <div class="sec-label">Who Uses What — Platform Fit by Institution Type</div>
+      <div class="tbl-wrap">
+        <div class="tbl-head">Institution Type → Best-Fit Platform(s)</div>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Institution Type</th><th>Primary Platform</th><th>Secondary / Supplemental</th><th>Key Reason</th></tr></thead>
+            <tbody>
+              <tr><td>Global Investment Bank</td><td><span class="badge" style="background:rgba(247,147,30,.1);color:var(--c-murex);border:1px solid rgba(247,147,30,.2)">Murex MX.3</span></td><td><span class="badge" style="background:rgba(0,168,232,.1);color:var(--c-axiom);border:1px solid rgba(0,168,232,.2)">Axiom SL</span></td><td>Front-to-back derivatives + regulatory capital</td></tr>
+              <tr><td>Asset Manager / Hedge Fund</td><td><span class="badge" style="background:rgba(230,57,70,.1);color:var(--c-aladdin);border:1px solid rgba(230,57,70,.2)">Aladdin</span></td><td>—</td><td>Portfolio risk, OMS, compliance in one OS</td></tr>
+              <tr><td>Insurance Company</td><td><span class="badge" style="background:rgba(230,57,70,.1);color:var(--c-aladdin);border:1px solid rgba(230,57,70,.2)">Aladdin</span></td><td><span class="badge" style="background:rgba(0,168,232,.1);color:var(--c-axiom);border:1px solid rgba(0,168,232,.2)">Axiom SL</span></td><td>ALM + Solvency II capital reporting</td></tr>
+              <tr><td>Private Bank / Family Office</td><td><span class="badge" style="background:rgba(168,85,247,.1);color:var(--c-triplea);border:1px solid rgba(168,85,247,.2)">Triple'A</span></td><td>—</td><td>Client-centric wealth management & reporting</td></tr>
+              <tr><td>Regional / Universal Bank</td><td><span class="badge" style="background:rgba(0,212,170,.1);color:var(--c-calypso);border:1px solid rgba(0,212,170,.2)">Calypso</span></td><td><span class="badge" style="background:rgba(0,168,232,.1);color:var(--c-axiom);border:1px solid rgba(0,168,232,.2)">Axiom SL</span></td><td>Treasury ALM + regulatory capital</td></tr>
+              <tr><td>CCP / Clearing House</td><td><span class="badge" style="background:rgba(0,212,170,.1);color:var(--c-calypso);border:1px solid rgba(0,212,170,.2)">Calypso</span></td><td>—</td><td>Unique CCP margining & default waterfall tech</td></tr>
+              <tr><td>Energy Trading Company</td><td><span class="badge" style="background:rgba(247,147,30,.1);color:var(--c-murex);border:1px solid rgba(247,147,30,.2)">Murex MX.3</span></td><td>—</td><td>Physical + financial commodity ETRM support</td></tr>
+              <tr><td>Broker-Dealer</td><td><span class="badge" style="background:rgba(0,168,232,.1);color:var(--c-axiom);border:1px solid rgba(0,168,232,.2)">Axiom SL</span></td><td><span class="badge" style="background:rgba(0,212,170,.1);color:var(--c-calypso);border:1px solid rgba(0,212,170,.2)">Calypso</span></td><td>SEC net capital + post-trade operations</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Capability comparison matrix -->
+    <div>
+      <div class="sec-label">Capability Matrix — What Each Platform Covers</div>
+      <div class="tbl-wrap">
+        <div class="tbl-head">Core Capability Coverage</div>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Capability</th><th style="color:var(--c-aladdin)">Aladdin</th><th style="color:var(--c-axiom)">Axiom SL</th><th style="color:var(--c-murex)">Murex</th><th style="color:var(--c-calypso)">Calypso</th><th style="color:var(--c-triplea)">Triple'A</th></tr></thead>
+            <tbody>
+              <tr><td>Portfolio Risk (VaR / Stress)</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Limited</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Moderate</span></td></tr>
+              <tr><td>Regulatory Capital (Basel)</td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-no">✗ No</span></td></tr>
+              <tr><td>Derivatives Pricing & Trading</td><td><span class="badge b-partial">~ Moderate</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Limited</span></td></tr>
+              <tr><td>Collateral Management</td><td><span class="badge b-partial">~ Limited</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-no">✗ No</span></td></tr>
+              <tr><td>OMS / Trade Execution</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td></tr>
+              <tr><td>Performance Attribution</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-yes">✓ GIPS</span></td></tr>
+              <tr><td>Client / Wealth Reporting</td><td><span class="badge b-partial">~ Aladdin Wealth</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-yes">✓ Full</span></td></tr>
+              <tr><td>Liquidity Risk (LCR/NSFR)</td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-no">✗ No</span></td></tr>
+              <tr><td>FRTB Compliance</td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-no">✗ No</span></td></tr>
+              <tr><td>ESG / Sustainable Investing</td><td><span class="badge b-yes">✓ Aladdin Climate</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-yes">✓ SFDR</span></td></tr>
+              <tr><td>Treasury / ALM</td><td><span class="badge b-partial">~ Insurance ALM</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Limited</span></td></tr>
+              <tr><td>CCP / Clearing Technology</td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-partial">~ Limited</span></td><td><span class="badge b-yes">✓ Specialist</span></td><td><span class="badge b-no">✗ No</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why each platform is useful -->
+    <div>
+      <div class="sec-label">Why These Platforms Matter</div>
+      <div class="use-grid">
+        <div class="use-card">
+          <div class="use-header"><span class="use-icon">📊</span><span class="use-title" style="color:var(--c-aladdin)">Aladdin — The Investment OS</span></div>
+          <div class="use-body">Aladdin is unique because it runs the same risk models that BlackRock uses internally. When $21T in assets across 200+ institutions use the same platform, it creates network effects — shared benchmarks, consistent risk language and standardised data that individual firms can't replicate alone.</div>
+        </div>
+        <div class="use-card">
+          <div class="use-header"><span class="use-icon">🏛️</span><span class="use-title" style="color:var(--c-axiom)">Axiom SL — The Reg Compliance Engine</span></div>
+          <div class="use-body">Regulatory reporting is one of the highest-cost, highest-risk activities in banking. Axiom SL reduces that risk by maintaining pre-built regulatory content for 50+ frameworks across 30+ jurisdictions — removing the need for banks to build and maintain custom calculation engines in-house.</div>
+        </div>
+        <div class="use-card">
+          <div class="use-header"><span class="use-icon">⚡</span><span class="use-title" style="color:var(--c-murex)">Murex — The Derivatives Workhorse</span></div>
+          <div class="use-body">MX.3 is the dominant platform for OTC derivatives at tier-1 banks because it handles the full lifecycle — from exotic pricing models (Monte Carlo, PDE) through real-time XVA to CCP clearing and EMIR reporting — on a single codebase. Replacing it typically takes 5–10 years.</div>
+        </div>
+        <div class="use-card">
+          <div class="use-header"><span class="use-icon">🏗️</span><span class="use-title" style="color:var(--c-calypso)">Calypso — The CCP & Treasury Specialist</span></div>
+          <div class="use-body">Calypso carved a niche by being the only major vendor with deep CCP technology. Multiple central counterparties run their clearing and default management on Calypso. Its collateral optimisation engine is also best-in-class for banks managing large bilateral and cleared portfolios.</div>
+        </div>
+        <div class="use-card">
+          <div class="use-header"><span class="use-icon">💼</span><span class="use-title" style="color:var(--c-triplea)">Triple'A — The Private Bank Platform</span></div>
+          <div class="use-body">Wealth management demands a different system than capital markets — client-first reporting, mandate compliance, GIPS performance and advisory suitability matter more than raw trading throughput. Triple'A built specifically for private banks, giving it depth in client-centric features that capital-markets platforms lack.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 1 — BLACKROCK ALADDIN
+════════════════════════════════════════════ -->
+<section class="page" id="page-aladdin">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge b-al">Platform 1 of 5 · Investment OS</div>
+      <h1>BlackRock <span class="ac-al">Aladdin</span></h1>
+      <p class="hero-sub">Asset, Liability, Debt &amp; Derivative Investment Network — the world's largest investment operating system, managing risk, portfolio construction, trading and compliance for the global institutional investment community.</p>
+      <div class="stats">
+        <div class="stat"><div class="sv">$21T+</div><div class="sl">Assets on Platform</div></div>
+        <div class="stat"><div class="sv">55,000+</div><div class="sl">Investment Professionals</div></div>
+        <div class="stat"><div class="sv">200+</div><div class="sl">Client Institutions</div></div>
+        <div class="stat"><div class="sv">1988</div><div class="sl">Founded</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div>
+      <div class="sec-label">Core Capabilities</div>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <span class="cap-icon">📊</span>
+          <div class="cap-title">Multi-Asset Risk Analytics</div>
+          <div class="cap-desc">Unified risk framework across equities, fixed income, derivatives, alternatives and private assets. Factor-based risk decomposition and real-time P&L attribution at portfolio and security level.</div>
+          <div class="cap-tags"><span class="cap-tag">VaR</span><span class="cap-tag">Factor Risk</span><span class="cap-tag">Stress Testing</span><span class="cap-tag">CVaR</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏗️</span>
+          <div class="cap-title">Portfolio Construction & Optimisation</div>
+          <div class="cap-desc">Mean-variance and Black-Litterman optimisation engines. Constraint-aware portfolio construction with ESG overlays, factor tilts, turnover constraints and tax-loss harvesting integration.</div>
+          <div class="cap-tags"><span class="cap-tag">Black-Litterman</span><span class="cap-tag">ESG Overlays</span><span class="cap-tag">Factor Tilts</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">⚡</span>
+          <div class="cap-title">Trading & Order Management (OMS/EMS)</div>
+          <div class="cap-desc">Aladdin Trading (formerly Charles River) provides front-to-back order management, multi-broker FIX connectivity, transaction cost analysis and algorithmic execution across all asset classes.</div>
+          <div class="cap-tags"><span class="cap-tag">OMS</span><span class="cap-tag">EMS</span><span class="cap-tag">FIX</span><span class="cap-tag">TCA</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🛡️</span>
+          <div class="cap-title">Investment Compliance Monitoring</div>
+          <div class="cap-desc">Pre- and post-trade compliance with UCITS, AIFMD, ERISA, Solvency II, FATCA and MiFID II. Real-time guideline breach detection with full audit trail and resolution workflow.</div>
+          <div class="cap-tags"><span class="cap-tag">UCITS</span><span class="cap-tag">MiFID II</span><span class="cap-tag">AIFMD</span><span class="cap-tag">Solvency II</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔗</span>
+          <div class="cap-title">Aladdin Data Cloud</div>
+          <div class="cap-desc">Centralised data fabric for security master, reference data, pricing, index data and alternative data. API-first architecture with Python SDK for quantitative research workflows.</div>
+          <div class="cap-tags"><span class="cap-tag">REST API</span><span class="cap-tag">Python SDK</span><span class="cap-tag">Data Mesh</span><span class="cap-tag">Google Cloud</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🧮</span>
+          <div class="cap-title">Fixed Income Analytics</div>
+          <div class="cap-desc">Best-in-class duration, convexity, OAS, spread decomposition, mortgage prepayment models and scenario analysis for the full fixed income universe including CLOs and structured credit.</div>
+          <div class="cap-tags"><span class="cap-tag">OAS</span><span class="cap-tag">Duration</span><span class="cap-tag">MBS/ABS</span><span class="cap-tag">CLO</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🌿</span>
+          <div class="cap-title">Aladdin Climate</div>
+          <div class="cap-desc">Physical and transition risk analytics for climate-aware investing. TCFD-aligned scenario modelling, carbon footprint reporting, green revenue exposure and Paris-alignment pathway analysis.</div>
+          <div class="cap-tags"><span class="cap-tag">TCFD</span><span class="cap-tag">Net Zero</span><span class="cap-tag">Scope 1/2/3</span><span class="cap-tag">Carbon</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">💼</span>
+          <div class="cap-title">Aladdin Wealth</div>
+          <div class="cap-desc">Direct-indexing, goals-based planning, tax-managed SMA strategies and personalised portfolio management for wealth managers. Integration with financial planning tools and advisor workflows.</div>
+          <div class="cap-tags"><span class="cap-tag">Direct Indexing</span><span class="cap-tag">SMA</span><span class="cap-tag">Goals-Based</span><span class="cap-tag">Tax-Managed</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏦</span>
+          <div class="cap-title">Insurance Asset Management</div>
+          <div class="cap-desc">Dedicated insurer analytics covering ALM, duration matching, regulatory capital (Solvency II, RBC, LAGIC), cash flow modelling and regulatory look-through for pooled fund structures.</div>
+          <div class="cap-tags"><span class="cap-tag">ALM</span><span class="cap-tag">Solvency II</span><span class="cap-tag">RBC</span><span class="cap-tag">Look-Through</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔬</span>
+          <div class="cap-title">Scenario & Stress Testing</div>
+          <div class="cap-desc">Historical and hypothetical scenario analysis across 40+ years of market data. Regulatory stress tests (EBA, Fed CCAR, DFAST) alongside custom factor shock and macro scenarios.</div>
+          <div class="cap-tags"><span class="cap-tag">CCAR</span><span class="cap-tag">DFAST</span><span class="cap-tag">Historical</span><span class="cap-tag">Custom Shocks</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📈</span>
+          <div class="cap-title">Performance Attribution</div>
+          <div class="cap-desc">Brinson-Hood-Beebower and factor-based attribution for equities and fixed income. Multi-currency, multi-period attribution with benchmark-relative and absolute return decomposition.</div>
+          <div class="cap-tags"><span class="cap-tag">BHB Model</span><span class="cap-tag">Multi-Currency</span><span class="cap-tag">Carino</span><span class="cap-tag">GIPS-Ready</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🤖</span>
+          <div class="cap-title">Aladdin AI / Copilot</div>
+          <div class="cap-desc">Generative AI layer embedded across Aladdin for natural language portfolio queries, automated commentary generation, anomaly detection in risk reports and intelligent document extraction.</div>
+          <div class="cap-tags"><span class="cap-tag">Gen AI</span><span class="cap-tag">NLP</span><span class="cap-tag">Copilot</span><span class="cap-tag">Anomaly Detection</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Key Differentiators</div>
+      <div class="hl-grid">
+        <div class="hl-card"><div class="hl-icon">🌐</div><div><div class="hl-title">Full Investment Lifecycle</div><div class="hl-sub">Pre-trade risk, execution, post-trade and reporting in one ecosystem</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🔌</div><div><div class="hl-title">Open Architecture</div><div class="hl-sub">REST APIs and Python SDK for quant research and custom workflow integration</div></div></div>
+        <div class="hl-card"><div class="hl-icon">📡</div><div><div class="hl-title">$21T Network Effect</div><div class="hl-sub">Shared risk models across $21T+ AUM enables richer cross-institutional benchmarks</div></div></div>
+        <div class="hl-card"><div class="hl-icon">☁️</div><div><div class="hl-title">Cloud-Native</div><div class="hl-sub">Hybrid-cloud deployment; Aladdin Data Cloud on Google Cloud with elastic scaling</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🧠</div><div><div class="hl-title">Barra Risk Models</div><div class="hl-sub">Industry-leading factor risk models across all major asset classes and geographies</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🔒</div><div><div class="hl-title">Compliance-First</div><div class="hl-sub">Pre-built rule libraries for UCITS, AIFMD, MiFID II, ERISA and 20+ regulatory regimes</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Asset Class Coverage</div>
+      <div class="tbl-wrap">
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Asset Class</th><th>Analytics Depth</th><th>OMS / EMS</th><th>Risk Models</th><th>Compliance Rules</th></tr></thead>
+            <tbody>
+              <tr><td>Equities</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Yes</span></td><td><span class="badge b-yes">✓ Barra</span></td><td><span class="badge b-yes">✓ Yes</span></td></tr>
+              <tr><td>Fixed Income</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Yes</span></td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Yes</span></td></tr>
+              <tr><td>Derivatives</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-yes">✓ Yes</span></td><td><span class="badge b-yes">✓ Yes</span></td></tr>
+              <tr><td>Private Markets</td><td><span class="badge b-partial">~ Growing</span></td><td><span class="badge b-no">✗ Limited</span></td><td><span class="badge b-partial">~ Developing</span></td><td><span class="badge b-partial">~ Partial</span></td></tr>
+              <tr><td>Real Assets</td><td><span class="badge b-partial">~ Moderate</span></td><td><span class="badge b-no">✗ No</span></td><td><span class="badge b-partial">~ Partial</span></td><td><span class="badge b-partial">~ Partial</span></td></tr>
+              <tr><td>Multi-Asset / Macro</td><td><span class="badge b-yes">✓ Full</span></td><td><span class="badge b-yes">✓ Yes</span></td><td><span class="badge b-yes">✓ Yes</span></td><td><span class="badge b-yes">✓ Yes</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 2 — AXIOM SL
+════════════════════════════════════════════ -->
+<section class="page" id="page-axiom">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge b-ax">Platform 2 of 5 · Regulatory Reporting</div>
+      <h1>Axiom <span class="ac-ax">SL</span></h1>
+      <p class="hero-sub">A leading financial regulatory reporting and risk management platform used by global banks, broker-dealers and insurance firms to navigate complex, multi-jurisdictional regulatory requirements with automated calculations, XBRL submission and real-time data lineage.</p>
+      <div class="stats">
+        <div class="stat"><div class="sv">150+</div><div class="sl">Global Clients</div></div>
+        <div class="stat"><div class="sv">50+</div><div class="sl">Regulatory Frameworks</div></div>
+        <div class="stat"><div class="sv">30+</div><div class="sl">Jurisdictions</div></div>
+        <div class="stat"><div class="sv">1999</div><div class="sl">Founded</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div>
+      <div class="sec-label">Core Capabilities</div>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <span class="cap-icon">📋</span>
+          <div class="cap-title">Basel III / IV Capital Reporting</div>
+          <div class="cap-desc">Comprehensive RWA calculation and reporting under Standardised Approach, IRB and the Basel IV output floor. Full Pillar 1, 2 and 3 disclosure support including COREP and FINREP submissions to national competent authorities.</div>
+          <div class="cap-tags"><span class="cap-tag">RWA</span><span class="cap-tag">COREP</span><span class="cap-tag">FINREP</span><span class="cap-tag">SA-CCR</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">💧</span>
+          <div class="cap-title">Liquidity Risk — LCR & NSFR</div>
+          <div class="cap-desc">Daily LCR computation and NSFR calculation per CRR/CRD and local supervisory add-ons. Intraday liquidity monitoring, ILAAP support and liquidity buffer composition reporting to regulators.</div>
+          <div class="cap-tags"><span class="cap-tag">LCR</span><span class="cap-tag">NSFR</span><span class="cap-tag">ILAAP</span><span class="cap-tag">ALMM</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📉</span>
+          <div class="cap-title">FRTB — Fundamental Review of the Trading Book</div>
+          <div class="cap-desc">Full IMA and SA framework: Expected Shortfall calculation, non-modellable risk factors (NMRF), P&L attribution tests, Sensitivities-Based Method (SBM) and Default Risk Charge (DRC).</div>
+          <div class="cap-tags"><span class="cap-tag">FRTB-IMA</span><span class="cap-tag">FRTB-SA</span><span class="cap-tag">NMRF</span><span class="cap-tag">DRC</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📉</span>
+          <div class="cap-title">IFRS 9 — Expected Credit Loss</div>
+          <div class="cap-desc">Stage classification (1/2/3), lifetime and 12-month ECL calculation, forward-looking macroeconomic scenarios, probability of default term structures and disclosure packages for external reporting.</div>
+          <div class="cap-tags"><span class="cap-tag">ECL</span><span class="cap-tag">SICR</span><span class="cap-tag">PD/LGD/EAD</span><span class="cap-tag">Staging</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🌍</span>
+          <div class="cap-title">Large Exposure & Concentration Risk</div>
+          <div class="cap-desc">CRR Article 392-403 large exposure monitoring, group connectivity analysis, exemptions management, intragroup exposure reporting and LE forms submission to national regulators.</div>
+          <div class="cap-tags"><span class="cap-tag">CRR Art.392</span><span class="cap-tag">Concentration</span><span class="cap-tag">LE Forms</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔄</span>
+          <div class="cap-title">Asset Encumbrance Reporting</div>
+          <div class="cap-desc">EBA Asset Encumbrance (AE) template population, pledged versus unencumbered asset tracking, contingent encumbrance from derivative exposures and collateral pool reporting under CRR.</div>
+          <div class="cap-tags"><span class="cap-tag">AE Templates</span><span class="cap-tag">EBA</span><span class="cap-tag">Collateral Pool</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏛️</span>
+          <div class="cap-title">Supervisory Reporting (EBA / Fed / PRA)</div>
+          <div class="cap-desc">Automated XBRL tagging and electronic submission to EBA, Federal Reserve (FR Y-9C, FR 2052a), PRA, FINMA and other national competent authorities. Proactive regulatory change management for template updates.</div>
+          <div class="cap-tags"><span class="cap-tag">XBRL</span><span class="cap-tag">EBA ITS</span><span class="cap-tag">FR Y-9C</span><span class="cap-tag">PRA</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🧩</span>
+          <div class="cap-title">Counterparty Credit Risk</div>
+          <div class="cap-desc">SA-CCR, IMM and CEM calculations for OTC derivatives and SFTs. CVA capital charge (SA-CVA and BA-CVA), wrong-way risk modelling and CCR netting agreement management.</div>
+          <div class="cap-tags"><span class="cap-tag">SA-CCR</span><span class="cap-tag">CVA</span><span class="cap-tag">SFT</span><span class="cap-tag">IMM</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">⚙️</span>
+          <div class="cap-title">Data Management & Lineage (BCBS 239)</div>
+          <div class="cap-desc">Golden source data management with full audit lineage from source systems to regulatory output. Data quality rules, exception management and BCBS 239-compliant data aggregation and risk reporting.</div>
+          <div class="cap-tags"><span class="cap-tag">BCBS 239</span><span class="cap-tag">Data Lineage</span><span class="cap-tag">DQM</span><span class="cap-tag">Golden Source</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📑</span>
+          <div class="cap-title">SEC / CFTC Reporting</div>
+          <div class="cap-desc">FOCUS reports, Rule 15c3-1 net capital, Rule 15c3-3 customer reserve, Volcker Rule metrics and swap dealer reporting under CFTC Part 45 and Part 43 for US broker-dealers and swap dealers.</div>
+          <div class="cap-tags"><span class="cap-tag">15c3-1</span><span class="cap-tag">FOCUS</span><span class="cap-tag">Volcker</span><span class="cap-tag">CFTC</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔐</span>
+          <div class="cap-title">Stress Testing & ICAAP / ILAAP</div>
+          <div class="cap-desc">Integrated stress testing framework supporting ICAAP, ILAAP and recovery/resolution planning. Scenario library, multi-year capital projection, management action overlays and board-ready output.</div>
+          <div class="cap-tags"><span class="cap-tag">ICAAP</span><span class="cap-tag">ILAAP</span><span class="cap-tag">Resolution</span><span class="cap-tag">CCAR</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🗂️</span>
+          <div class="cap-title">Regulatory Change Management</div>
+          <div class="cap-desc">Automated monitoring of regulatory publications, pre-built content updates for new frameworks, and a regulatory calendar tracking go-live dates and implementation milestones across 30+ jurisdictions.</div>
+          <div class="cap-tags"><span class="cap-tag">Reg Watch</span><span class="cap-tag">Horizon Scan</span><span class="cap-tag">Change Log</span><span class="cap-tag">Auto-Update</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Key Differentiators</div>
+      <div class="hl-grid">
+        <div class="hl-card"><div class="hl-icon">🗺️</div><div><div class="hl-title">30+ Jurisdictions</div><div class="hl-sub">Single platform covers EU, US, UK, APAC regulatory submissions simultaneously</div></div></div>
+        <div class="hl-card"><div class="hl-icon">📦</div><div><div class="hl-title">Pre-Built Reg Content</div><div class="hl-sub">50+ regulatory frameworks maintained and updated by Axiom — no custom dev needed</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🧵</div><div><div class="hl-title">Full Data Lineage</div><div class="hl-sub">Every regulatory number traceable back to source — critical for audit and regulator queries</div></div></div>
+        <div class="hl-card"><div class="hl-icon">⚡</div><div><div class="hl-title">Automated XBRL</div><div class="hl-sub">End-to-end XBRL tagging and direct electronic filing removes manual reporting steps</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 3 — MUREX
+════════════════════════════════════════════ -->
+<section class="page" id="page-murex">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge b-mu">Platform 3 of 5 · Capital Markets</div>
+      <h1>Murex <span class="ac-mu">MX.3</span></h1>
+      <p class="hero-sub">MX.3 is Murex's integrated front-to-back-to-risk trading platform — the dominant system for OTC derivatives at tier-1 investment banks. Covers the entire trade lifecycle from exotic pricing through real-time XVA, collateral management and regulatory reporting.</p>
+      <div class="stats">
+        <div class="stat"><div class="sv">300+</div><div class="sl">Global Clients</div></div>
+        <div class="stat"><div class="sv">60+</div><div class="sl">Countries</div></div>
+        <div class="stat"><div class="sv">$300T</div><div class="sl">Notional Processed / Year</div></div>
+        <div class="stat"><div class="sv">1986</div><div class="sl">Founded</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div>
+      <div class="sec-label">Core Capabilities</div>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <span class="cap-icon">📱</span>
+          <div class="cap-title">Front Office Trading & Pricing</div>
+          <div class="cap-desc">Real-time trade booking and pricing for OTC and listed derivatives, bonds, FX, equities and commodities. Murex Pricer supports complex exotics with Monte Carlo, PDE and closed-form analytical engines.</div>
+          <div class="cap-tags"><span class="cap-tag">OTC Derivatives</span><span class="cap-tag">Exotics</span><span class="cap-tag">Monte Carlo</span><span class="cap-tag">PDE</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📹</span>
+          <div class="cap-title">Real-Time P&L & Greeks</div>
+          <div class="cap-desc">Intraday P&L flash, full Greeks (Delta, Gamma, Vega, Theta, Rho, cross-Greeks), sensitivities aggregation and real-time XVA (CVA, DVA, FVA, MVA, KVA) across the entire derivatives book.</div>
+          <div class="cap-tags"><span class="cap-tag">Greeks</span><span class="cap-tag">XVA</span><span class="cap-tag">CVA/DVA</span><span class="cap-tag">FVA/MVA</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔄</span>
+          <div class="cap-title">Collateral & Margin Management</div>
+          <div class="cap-desc">Bilateral and cleared collateral management, initial margin (SIMM / ISDA), variation margin, dispute management and triparty connectivity. Full compliance with UMR all phases.</div>
+          <div class="cap-tags"><span class="cap-tag">SIMM</span><span class="cap-tag">UMR</span><span class="cap-tag">IM/VM</span><span class="cap-tag">Triparty</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏧</span>
+          <div class="cap-title">Treasury & Liquidity Management</div>
+          <div class="cap-desc">Cash management, funding desk, intraday liquidity monitoring, FTP (Funds Transfer Pricing) framework, money market operations and central bank facility management.</div>
+          <div class="cap-tags"><span class="cap-tag">FTP</span><span class="cap-tag">Cash Mgmt</span><span class="cap-tag">Intraday LM</span><span class="cap-tag">MM Ops</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">⚖️</span>
+          <div class="cap-title">FRTB — Full IMA & SA Implementation</div>
+          <div class="cap-desc">Expected Shortfall, NMRF identification and capitalisation, P&L Attribution test, Sensitivity-Based Method and Default Risk Charge — natively within MX.3, no separate system required.</div>
+          <div class="cap-tags"><span class="cap-tag">IMA</span><span class="cap-tag">ES</span><span class="cap-tag">SBM</span><span class="cap-tag">PLA Test</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏗️</span>
+          <div class="cap-title">Clearing & Post-Trade Processing</div>
+          <div class="cap-desc">CCP clearing connectivity (LCH, CME, Eurex, ICE), trade compression, affirmation/confirmation via MarkitWire and DTCC, settlement instruction generation and nostro reconciliation.</div>
+          <div class="cap-tags"><span class="cap-tag">CCP</span><span class="cap-tag">LCH</span><span class="cap-tag">DTCC</span><span class="cap-tag">Settlement</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📡</span>
+          <div class="cap-title">Trade Repository & Regulatory Reporting</div>
+          <div class="cap-desc">EMIR, CFTC, MAS, HKMA and ASIC trade reporting to registered TRs. MiFID II transaction reporting, post-trade transparency, SFTR and best-execution reporting.</div>
+          <div class="cap-tags"><span class="cap-tag">EMIR</span><span class="cap-tag">MiFID II</span><span class="cap-tag">CFTC</span><span class="cap-tag">SFTR</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🌐</span>
+          <div class="cap-title">XVA Trading Desk Management</div>
+          <div class="cap-desc">Dedicated XVA desk workflows with CVA hedging, MVA optimisation, KVA capital allocation, centralised CVA booking and regulatory capital attribution per business line.</div>
+          <div class="cap-tags"><span class="cap-tag">CVA Hedging</span><span class="cap-tag">MVA Opt</span><span class="cap-tag">KVA Alloc</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">⚡</span>
+          <div class="cap-title">Commodities & Energy Trading (ETRM)</div>
+          <div class="cap-desc">Physical and financial commodity trading for power, gas, oil, metals and agricultural products. Scheduling, volume management, ETRM-style workflows and hedge accounting (IAS 39 / IFRS 9).</div>
+          <div class="cap-tags"><span class="cap-tag">ETRM</span><span class="cap-tag">Physical Delivery</span><span class="cap-tag">Hedge Acctg</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔧</span>
+          <div class="cap-title">Operations & Workflow</div>
+          <div class="cap-desc">Configurable operations workflows for trade lifecycle events, SWIFT messaging (MT/MX / ISO 20022), exception-based processing, STP rate monitoring and breaks management dashboards.</div>
+          <div class="cap-tags"><span class="cap-tag">SWIFT</span><span class="cap-tag">STP</span><span class="cap-tag">ISO 20022</span><span class="cap-tag">Breaks Mgmt</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🧪</span>
+          <div class="cap-title">Model Risk & IPV</div>
+          <div class="cap-desc">Integrated model governance with challenger model framework, parameter backtesting, Independent Price Verification (IPV) feeds and model risk capital charge support.</div>
+          <div class="cap-tags"><span class="cap-tag">IPV</span><span class="cap-tag">Backtesting</span><span class="cap-tag">Model Gov</span><span class="cap-tag">Challenger</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">☁️</span>
+          <div class="cap-title">MX.3 on Cloud</div>
+          <div class="cap-desc">Cloud-native deployment on AWS and Azure with Kubernetes-based microservices architecture. Elastic scaling for end-of-day batch, intraday grid computing and near-zero downtime upgrades.</div>
+          <div class="cap-tags"><span class="cap-tag">AWS</span><span class="cap-tag">Azure</span><span class="cap-tag">Kubernetes</span><span class="cap-tag">Elastic Grid</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Key Differentiators</div>
+      <div class="hl-grid">
+        <div class="hl-card"><div class="hl-icon">🏆</div><div><div class="hl-title">Tier-1 Bank Standard</div><div class="hl-sub">Deployed at the majority of the world's top 20 investment banks for derivatives</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🔬</div><div><div class="hl-title">Exotic Pricing Depth</div><div class="hl-sub">Monte Carlo, PDE and analytical engines for the most complex structured products</div></div></div>
+        <div class="hl-card"><div class="hl-icon">⚡</div><div><div class="hl-title">Real-Time XVA</div><div class="hl-sub">CVA, DVA, FVA, MVA, KVA computed in real time — not as overnight batch</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🔗</div><div><div class="hl-title">Single Codebase F2B</div><div class="hl-sub">One platform from pricing through clearing, settlement and regulatory reporting</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 4 — CALYPSO
+════════════════════════════════════════════ -->
+<section class="page" id="page-calypso">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge b-ca">Platform 4 of 5 · Capital Markets & Treasury</div>
+      <h1>Calypso <span class="ac-ca">Technology</span></h1>
+      <p class="hero-sub">Calypso (now part of Broadridge) is a cross-asset capital markets and treasury platform. Uniquely strong in CCP technology, collateral optimisation and repo/securities finance — serving investment banks, clearing firms, CCPs and treasury operations worldwide.</p>
+      <div class="stats">
+        <div class="stat"><div class="sv">170+</div><div class="sl">Clients Globally</div></div>
+        <div class="stat"><div class="sv">55+</div><div class="sl">Countries</div></div>
+        <div class="stat"><div class="sv">$500T+</div><div class="sl">Notional Managed / Year</div></div>
+        <div class="stat"><div class="sv">1997</div><div class="sl">Founded</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div>
+      <div class="sec-label">Core Capabilities</div>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <span class="cap-icon">💱</span>
+          <div class="cap-title">Cross-Asset Trading & Pricing</div>
+          <div class="cap-desc">Real-time pricing and trade capture for rates, credit, FX, equities, commodities and repo. Supports vanilla and structured products with configurable pricing workflows and model libraries.</div>
+          <div class="cap-tags"><span class="cap-tag">Cross-Asset</span><span class="cap-tag">Vanilla/Exotic</span><span class="cap-tag">STP</span><span class="cap-tag">Multi-Entity</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏦</span>
+          <div class="cap-title">Treasury & Asset-Liability Management</div>
+          <div class="cap-desc">Centralised treasury: cash flow forecasting, funding gap analysis, ALM repricing gap, duration of equity, NII/EVE sensitivity and FTP framework. Integrates with core banking systems.</div>
+          <div class="cap-tags"><span class="cap-tag">ALM</span><span class="cap-tag">NII/EVE</span><span class="cap-tag">Funding Gap</span><span class="cap-tag">FTP</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔐</span>
+          <div class="cap-title">Collateral Optimisation</div>
+          <div class="cap-desc">Best-in-class collateral optimisation engine supporting bilateral IM/VM margining, CCP margin calls, triparty management (Euroclear, Clearstream) and cheapest-to-deliver collateral scheduling.</div>
+          <div class="cap-tags"><span class="cap-tag">IM/VM</span><span class="cap-tag">Optimisation</span><span class="cap-tag">Triparty</span><span class="cap-tag">UMR</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">⚖️</span>
+          <div class="cap-title">Market & Counterparty Risk</div>
+          <div class="cap-desc">Integrated market risk (VaR, ES, Greeks), counterparty credit risk (EPE, PFE, CVA), liquidity risk and operational risk. Scenario analysis, stress testing and real-time limit management.</div>
+          <div class="cap-tags"><span class="cap-tag">VaR</span><span class="cap-tag">EPE/PFE</span><span class="cap-tag">CVA</span><span class="cap-tag">Stress</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🏛️</span>
+          <div class="cap-title">CCP / Central Counterparty Technology</div>
+          <div class="cap-desc">Calypso is deployed by multiple CCPs globally. Supports clearing member management, default waterfall, margin models (SPAN, PRISMA, TIMS), guarantee fund management and default auction processes.</div>
+          <div class="cap-tags"><span class="cap-tag">CCP Ops</span><span class="cap-tag">SPAN</span><span class="cap-tag">Default Fund</span><span class="cap-tag">Auction</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔗</span>
+          <div class="cap-title">Repo & Securities Finance</div>
+          <div class="cap-desc">Full lifecycle management of repo, reverse repo, securities lending and borrowing. SFTR reporting, GC and special repo management, DVP settlement instructions and position optimisation.</div>
+          <div class="cap-tags"><span class="cap-tag">Repo</span><span class="cap-tag">Sec Lending</span><span class="cap-tag">SFTR</span><span class="cap-tag">DVP</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📋</span>
+          <div class="cap-title">Regulatory & Compliance</div>
+          <div class="cap-desc">EMIR, MiFID II, Dodd-Frank, FRTB, SA-CCR and IFRS 13 compliance built into the platform. Trade reporting connectivity to DTCC, ICE TR and UnaVista repositories.</div>
+          <div class="cap-tags"><span class="cap-tag">EMIR</span><span class="cap-tag">Dodd-Frank</span><span class="cap-tag">SA-CCR</span><span class="cap-tag">IFRS 13</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">💰</span>
+          <div class="cap-title">P&L Explain & Hedge Accounting</div>
+          <div class="cap-desc">Daily P&L explain with attribution to risk factors, time value, new trades and lifecycle events. Full hedge accounting under IAS 39 / IFRS 9 and fair value levelling under IFRS 13.</div>
+          <div class="cap-tags"><span class="cap-tag">P&L Explain</span><span class="cap-tag">Hedge Acctg</span><span class="cap-tag">IFRS 9</span><span class="cap-tag">IFRS 13</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📡</span>
+          <div class="cap-title">Market Data & Curve Management</div>
+          <div class="cap-desc">Real-time and EOD market data ingestion from Bloomberg, Refinitiv and ICE. Multi-curve OIS discounting, surface calibration, snapshot management and IBOR transition (LIBOR replacement).</div>
+          <div class="cap-tags"><span class="cap-tag">OIS</span><span class="cap-tag">Multi-Curve</span><span class="cap-tag">Vol Surface</span><span class="cap-tag">SOFR/SONIA</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔄</span>
+          <div class="cap-title">Settlement & Confirmations</div>
+          <div class="cap-desc">Automated settlement via SWIFT MT/MX and ISO 20022, DTCC ALERT, FpML-based confirmation, trade fails management, nostro/vostro reconciliation and corporate actions processing.</div>
+          <div class="cap-tags"><span class="cap-tag">SWIFT</span><span class="cap-tag">ISO 20022</span><span class="cap-tag">Nostro Recon</span><span class="cap-tag">Corp Actions</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">☁️</span>
+          <div class="cap-title">Calypso X — Cloud SaaS</div>
+          <div class="cap-desc">Broadridge-era cloud-native SaaS on AWS. Event-driven microservices, REST/FIX APIs for connectivity, near-zero downtime upgrades and elastic infrastructure scaling for peak processing.</div>
+          <div class="cap-tags"><span class="cap-tag">SaaS</span><span class="cap-tag">AWS</span><span class="cap-tag">REST API</span><span class="cap-tag">FIX</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📊</span>
+          <div class="cap-title">Reporting & Analytics</div>
+          <div class="cap-desc">Configurable regulatory, management and client reporting. Integration with Broadridge's data and analytics stack for consolidated front-to-back reporting across operations.</div>
+          <div class="cap-tags"><span class="cap-tag">Dashboards</span><span class="cap-tag">BI Integration</span><span class="cap-tag">Broadridge</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Key Differentiators</div>
+      <div class="hl-grid">
+        <div class="hl-card"><div class="hl-icon">🏛️</div><div><div class="hl-title">CCP Specialist</div><div class="hl-sub">The only major vendor with deep, production-proven central counterparty technology</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🎯</div><div><div class="hl-title">Collateral Optimisation</div><div class="hl-sub">Best-in-class cheapest-to-deliver scheduling across bilateral and cleared portfolios</div></div></div>
+        <div class="hl-card"><div class="hl-icon">📦</div><div><div class="hl-title">Repo & SFT Depth</div><div class="hl-sub">Full securities finance lifecycle including SFTR reporting and DVP settlement</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🔗</div><div><div class="hl-title">Broadridge Ecosystem</div><div class="hl-sub">Calypso X integrates with Broadridge's broader post-trade and data infrastructure</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 5 — TRIPLE'A / TEMENOS
+════════════════════════════════════════════ -->
+<section class="page" id="page-triplea">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge b-tr">Platform 5 of 5 · Wealth Management</div>
+      <h1>Triple&rsquo;A <span class="ac-tr">· Temenos</span></h1>
+      <p class="hero-sub">Triple'A (formerly Triple'A Plus, now part of Temenos) is a comprehensive wealth and portfolio management system for private banks, family offices and fund managers — delivering front-to-back portfolio management, GIPS performance, ESG reporting and digital advisory on the Temenos platform.</p>
+      <div class="stats">
+        <div class="stat"><div class="sv">100+</div><div class="sl">Institutions</div></div>
+        <div class="stat"><div class="sv">40+</div><div class="sl">Countries</div></div>
+        <div class="stat"><div class="sv">$2T+</div><div class="sl">AUM on Platform</div></div>
+        <div class="stat"><div class="sv">1993</div><div class="sl">Founded</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div>
+      <div class="sec-label">Core Capabilities</div>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <span class="cap-icon">💼</span>
+          <div class="cap-title">Portfolio Management</div>
+          <div class="cap-desc">Full portfolio lifecycle across equities, bonds, funds, alternatives, structured products and illiquid assets. Real-time NAV, cash and position management with multi-custodian consolidation.</div>
+          <div class="cap-tags"><span class="cap-tag">Multi-Asset</span><span class="cap-tag">Real-Time NAV</span><span class="cap-tag">Alternatives</span><span class="cap-tag">Illiquid</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📋</span>
+          <div class="cap-title">Order Management System (OMS)</div>
+          <div class="cap-desc">Centralised OMS with model portfolio rebalancing, drift monitoring, block trading, order aggregation and FIX protocol connectivity to brokers and execution venues.</div>
+          <div class="cap-tags"><span class="cap-tag">OMS</span><span class="cap-tag">Rebalancing</span><span class="cap-tag">FIX</span><span class="cap-tag">Block Trade</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📈</span>
+          <div class="cap-title">GIPS Performance Measurement & Attribution</div>
+          <div class="cap-desc">GIPS-compliant performance calculation (TWR, MWR), multi-period attribution (Brinson, Karnosky-Singer FX-adjusted), composite management and contribution analysis.</div>
+          <div class="cap-tags"><span class="cap-tag">GIPS</span><span class="cap-tag">TWR/MWR</span><span class="cap-tag">Attribution</span><span class="cap-tag">Composites</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🛡️</span>
+          <div class="cap-title">Investment Compliance & Mandate Monitoring</div>
+          <div class="cap-desc">Pre- and post-trade compliance against client mandates, regulatory restrictions, concentration limits, ESG screens and custom investment policy statements (IPS) with real-time breach alerts.</div>
+          <div class="cap-tags"><span class="cap-tag">Pre-Trade</span><span class="cap-tag">IPS</span><span class="cap-tag">ESG Screen</span><span class="cap-tag">Mandate</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">👤</span>
+          <div class="cap-title">Client Relationship & CRM</div>
+          <div class="cap-desc">360-degree client view with household aggregation, relationship mapping, contact management, digital onboarding (KYC/AML integration) and relationship profitability tracking.</div>
+          <div class="cap-tags"><span class="cap-tag">CRM</span><span class="cap-tag">KYC/AML</span><span class="cap-tag">Household</span><span class="cap-tag">Onboarding</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">📊</span>
+          <div class="cap-title">Client Reporting & Statements</div>
+          <div class="cap-desc">Configurable client reporting with white-labelled PDF statements, holdings reports, performance summaries, consolidated reporting across custodians and digital delivery via client portal and mobile.</div>
+          <div class="cap-tags"><span class="cap-tag">PDF Reports</span><span class="cap-tag">White-Label</span><span class="cap-tag">Digital Portal</span><span class="cap-tag">Mobile</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">⚖️</span>
+          <div class="cap-title">Portfolio Risk Analytics</div>
+          <div class="cap-desc">VaR, CVaR, volatility, Sharpe ratio, maximum drawdown, factor exposure and scenario analysis. Stress testing against historical and custom macro scenarios for advisory and discretionary clients.</div>
+          <div class="cap-tags"><span class="cap-tag">VaR</span><span class="cap-tag">Drawdown</span><span class="cap-tag">Factor Exp.</span><span class="cap-tag">Sharpe</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🎯</span>
+          <div class="cap-title">Asset Allocation & Model Portfolios</div>
+          <div class="cap-desc">Strategic and tactical asset allocation with Markowitz optimisation, Black-Litterman, risk budgeting and multi-level model portfolio hierarchy. Drift monitoring with automated rebalancing alerts.</div>
+          <div class="cap-tags"><span class="cap-tag">SAA/TAA</span><span class="cap-tag">Markowitz</span><span class="cap-tag">Risk Budget</span><span class="cap-tag">Drift Alerts</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🌿</span>
+          <div class="cap-title">ESG & Sustainable Investing</div>
+          <div class="cap-desc">ESG scores integration (MSCI, Sustainalytics, ISS), SDG alignment, exclusion screening, best-in-class selection and regulatory ESG reporting under SFDR and EU Taxonomy frameworks.</div>
+          <div class="cap-tags"><span class="cap-tag">SFDR</span><span class="cap-tag">EU Taxonomy</span><span class="cap-tag">MSCI ESG</span><span class="cap-tag">SDG</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🌍</span>
+          <div class="cap-title">Multi-Currency & Multi-Custodian</div>
+          <div class="cap-desc">Full multi-currency accounting with currency overlay management, FX hedging workflows, cross-custodian position consolidation and automatic FX revaluation at the portfolio level.</div>
+          <div class="cap-tags"><span class="cap-tag">FX Overlay</span><span class="cap-tag">Multi-Custodian</span><span class="cap-tag">Revaluation</span><span class="cap-tag">Hedge</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🔗</span>
+          <div class="cap-title">Temenos Platform Integration</div>
+          <div class="cap-desc">Native integration with Temenos Transact (core banking), Temenos Digital and Temenos Financial Crime Mitigation for a unified private banking and wealth management ecosystem.</div>
+          <div class="cap-tags"><span class="cap-tag">Transact</span><span class="cap-tag">Temenos Digital</span><span class="cap-tag">FCM</span><span class="cap-tag">API Layer</span></div>
+        </div>
+        <div class="cap-card">
+          <span class="cap-icon">🤖</span>
+          <div class="cap-title">Digital Advisory & Robo-Advice</div>
+          <div class="cap-desc">Hybrid advisory: discretionary, advisory and execution-only on one platform. Automated goals-based planning, MiFID II suitability profiling, risk questionnaires and digital onboarding workflows.</div>
+          <div class="cap-tags"><span class="cap-tag">Robo-Advisory</span><span class="cap-tag">Suitability</span><span class="cap-tag">Goals-Based</span><span class="cap-tag">MiFID II</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Strengths & Target Client Segments</div>
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Platform Strengths</h3>
+          <div class="info-list">
+            <div class="info-row"><span class="ic">✅</span><span class="tx">Single-system front-to-back for wealth management — no separate OMS or performance system needed</span></div>
+            <div class="info-row"><span class="ic">✅</span><span class="tx">GIPS-compliant performance with composite management out-of-the-box</span></div>
+            <div class="info-row"><span class="ic">✅</span><span class="tx">Deep private banking: discretionary, advisory and mandate tracking on one platform</span></div>
+            <div class="info-row"><span class="ic">✅</span><span class="tx">Extensive multi-currency and multi-custodian consolidation for HNW/UHNW clients</span></div>
+            <div class="info-row"><span class="ic">✅</span><span class="tx">Temenos ecosystem synergies: shared client data and core banking integration via Transact</span></div>
+            <div class="info-row"><span class="ic">✅</span><span class="tx">Flexible white-label client reporting engine with digital portal and mobile delivery</span></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3>Target Client Segments</h3>
+          <div class="info-list">
+            <div class="info-row"><span class="ic">🏛️</span><span class="tx">Private Banks & Wealth Managers (primary)</span></div>
+            <div class="info-row"><span class="ic">👨‍👩‍👧</span><span class="tx">Family Offices — single and multi-family</span></div>
+            <div class="info-row"><span class="ic">📦</span><span class="tx">Fund Managers & Asset Managers</span></div>
+            <div class="info-row"><span class="ic">🏢</span><span class="tx">Insurance Companies with unit-linked / fund-based products</span></div>
+            <div class="info-row"><span class="ic">🏦</span><span class="tx">Retail Banks with wealth management arms</span></div>
+            <div class="info-row"><span class="ic">🌐</span><span class="tx">Digital & Neobanks building investment and advisory propositions</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Key Differentiators</div>
+      <div class="hl-grid">
+        <div class="hl-card"><div class="hl-icon">🥇</div><div><div class="hl-title">GIPS Out-of-the-Box</div><div class="hl-sub">Full GIPS compliance with composite management — no custom development</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🔗</div><div><div class="hl-title">Core Banking Integration</div><div class="hl-sub">Native Temenos Transact link — unique advantage for banks on the Temenos stack</div></div></div>
+        <div class="hl-card"><div class="hl-icon">📱</div><div><div class="hl-title">Digital-First Delivery</div><div class="hl-sub">White-label client portal, mobile reporting and robo-advice in one platform</div></div></div>
+        <div class="hl-card"><div class="hl-icon">🌍</div><div><div class="hl-title">Multi-Custodian Consolidation</div><div class="hl-sub">Aggregates positions across all custodians for a true single view of client wealth</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>FinPlatform Hub &nbsp;·&nbsp; Overview · Aladdin · Axiom SL · Murex · Calypso · Triple'A Temenos &nbsp;·&nbsp; For informational purposes only</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
